@@ -1,0 +1,31 @@
+# secrets / env
+.env
+.env.*.local
+
+# local data & logs
+data/
+data/**/*
+/data
+*.wav
+*.mp3
+*.flac
+labels.csv
+
+# python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# docker/build
+**/.pytest_cache/
+dist/
+build/
+*.egg-info/
+
+# editor/OS
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: urbansound-asound
+  namespace: urbansound
+data:
+  asound.conf: |
+    pcm.!default {
+      type plug
+      slave.pcm "hw:0,0"
+    }
+

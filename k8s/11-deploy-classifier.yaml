@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: classifier
+  namespace: urbansound
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: classifier } }
+  template:
+    metadata: { labels: { app: classifier } }
+    spec:
+      nodeSelector: { urbansound-node: "${NODE_NAME}" }
+      tolerations:
+      - key: urbansound
+        operator: Equal
+        value: "only"
+        effect: NoSchedule
+      containers:
+      - name: classifier
+        image: ${CLS}
+        env:
+        - { name: DATA_DIR, value: "/data" }
+        - { name: USE_TPU, value: "${USE_TPU}" }
+        - { name: SITE_ID, value: "cooma-east" }
+        volumeMounts:
+        - { name: data, mountPath: /data }
+        - { name: dev-usb, mountPath: /dev/bus/usb }   # allow Coral if plugged
+        resources:
+          requests: { cpu: "100m", memory: "256Mi", ephemeral-storage: "200Mi" }
+          limits:   { cpu: "500m", memory: "512Mi", ephemeral-storage: "500Mi" }
+      volumes:
+      - name: data
+        persistentVolumeClaim: { claimName: urbansound-data }
+      - name: dev-usb
+        hostPath: { path: /dev/bus/usb, type: Directory }
+

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dashboard
+  namespace: urbansound
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: dashboard } }
+  template:
+    metadata: { labels: { app: dashboard } }
+    spec:
+      nodeSelector: { urbansound-node: "${NODE_NAME}" }
+      tolerations:
+      - key: urbansound
+        operator: Equal
+        value: "only"
+        effect: NoSchedule
+      containers:
+      - name: dash
+        image: ${DASH}
+        env:
+        - { name: DATA_DIR, value: "/data" }
+        ports:
+        - { containerPort: 5000, name: http }
+        volumeMounts:
+        - { name: data, mountPath: /data }
+        resources:
+          requests: { cpu: "50m", memory: "128Mi", ephemeral-storage: "100Mi" }
+          limits:   { cpu: "200m", memory: "256Mi", ephemeral-storage: "300Mi" }
+      volumes:
+      - name: data
+        persistentVolumeClaim: { claimName: urbansound-data }
+

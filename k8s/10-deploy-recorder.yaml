@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recorder
+  namespace: urbansound
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: recorder } }
+  template:
+    metadata: { labels: { app: recorder } }
+    spec:
+      nodeSelector: { urbansound-node: "${NODE_NAME}" }
+      tolerations:
+      - key: urbansound
+        operator: Equal
+        value: "only"
+        effect: NoSchedule
+      containers:
+      - name: recorder
+        image: ${REC}
+        env:
+        - { name: MIC_DEVICE, value: "${MIC_DEVICE}" }
+        - { name: OUT_DIR, value: "/data" }
+        - { name: SAMPLE_RATE, value: "16000" }
+        - { name: NOISE_DB_THRESHOLD, value: "45" }
+        volumeMounts:
+        - { name: data, mountPath: /data }
+        - { name: asound, mountPath: /etc/asound.conf, subPath: asound.conf, readOnly: true }
+        - { name: dev-snd, mountPath: /dev/snd }
+        resources:
+          requests: { cpu: "50m", memory: "128Mi", ephemeral-storage: "200Mi" }
+          limits:   { cpu: "300m", memory: "256Mi", ephemeral-storage: "500Mi" }
+      volumes:
+      - name: data
+        persistentVolumeClaim: { claimName: urbansound-data }
+      - name: asound
+        configMap: { name: urbansound-asound }
+      - name: dev-snd
+        hostPath: { path: /dev/snd, type: Directory }
+
