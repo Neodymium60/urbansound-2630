@@ -18,6 +18,12 @@ spec:
       containers:
       - name: recorder
         image: ${REC}
+        
+        # --- THIS SECTION IS ADDED ---
+        securityContext:
+          privileged: true
+        # ---------------------------
+
         env:
         - { name: MIC_DEVICE, value: "${MIC_DEVICE}" }
         - { name: OUT_DIR, value: "/data" }
@@ -37,4 +43,3 @@ spec:
         configMap: { name: urbansound-asound }
       - name: dev-snd
         hostPath: { path: /dev/snd, type: Directory }
-
