@@ -1,6 +1,6 @@
-# UrbanSound Pi — NSW Suburban Noise Monitor (MicroK8s)
+# UrbanSound Pi — Suburban Noise Monitor
 
-**Goal:** A small, repeatable, edge stack that records and classifies urban sounds on a **Raspberry Pi 4** and exposes a simple dashboard. Optimised for **NSW (Australia) suburban** monitoring practice.
+**Goal:** A small, repeatable, edge stack that records and classifies urban sounds on a **Raspberry Pi 4** and exposes a simple dashboard. Optimised for **NSW Noise Policy for Industry (NPFI)** monitoring practice.
 
 - **Recorder** (Python): captures WAV clips when sound exceeds a threshold
 - **Classifier** (Python/TFLite): tags clips; optional **Coral TPU**
@@ -13,7 +13,7 @@
 
 ## NSW suburban targets (for your dashboard overlays)
 
-From NSW NPfI for **residential – suburban (outdoor)**:
+From NSW NPFI for **residential – suburban (outdoor)**:
 
 - **Day:** 55 dB LAeq,period  
 - **Evening:** 45 dB LAeq,period  
