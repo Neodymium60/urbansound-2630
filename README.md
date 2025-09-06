@@ -7,7 +7,7 @@
 - **Dashboard** (Dash): lists clips & labels, basic plots
 - **Kubernetes**: single-node **MicroK8s** on the Pi; local **registry**; hostPath PVC to **USB stick** for data
 
-> ⚠️ **Compliance note:** This is a helpful monitor, **not** a calibrated SLM. If you need NPfI-compliant assessments, use a **Class 1/2 instrument** and EPA methods. This repo can compute helpful metrics (LAeq/LA90) but must be **calibrated** to report dB(A) SPL.
+> ⚠️ **Compliance note:** This is a helpful monitor, **not** a calibrated SLM. If you need NPFI-compliant assessments, use a **Class 1/2 instrument** and EPA methods. This repo can compute helpful metrics (LAeq/LA90) but must be **calibrated** to report dB(A) SPL.
 
 ---
 
